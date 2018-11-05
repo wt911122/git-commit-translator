@@ -17,7 +17,10 @@ async function resolve(){
         const messagefromhusky = fs.readFileSync(messagefile, { encoding: 'utf-8' });
         console.log(messagefromhusky);
         const result = await translate(messagefromhusky);
-        fs.writeFileSync(messagefile, format(result), { encoding: 'utf-8' });
+        const msg = format(result);
+        console.log(msg)
+        fs.writeFileSync(messagefile, msg, { encoding: 'utf-8' });
+        process.exit(1);
     }catch(err){
         console.log(err)
         throw err;
