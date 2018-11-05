@@ -11,14 +11,32 @@ const translate = new Translate({
 });
 
 // The text to translate
-const text = '第一次提交';
+//const text = '第一次提交';
 // The target language
 const target = 'en';
 
+const checkgitmoji = function(text){
+    const gitmoji = /^:[a-zA-Z_]:/.exec(text);
+    if(gitmoji){
+        const l = gitmoji[0].length;
+        return {
+            gitmoji: text.substring(0, l),
+            raw: text.substring(l+1)
+        }
+    }
+    return {
+        raw: text
+    }
+}
+
 // Translates some text into Russian
-export default async function(){
-    await translate
-        .translate(text, target)
+module.exports = function(text){
+    const {
+        raw,
+        gitmoji
+    } = checkgitmoji(text);
+    return translate
+        .translate(raw, target)
         .then(results => {
             const translation = results[0];
 
