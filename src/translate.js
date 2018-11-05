@@ -28,7 +28,6 @@ module.exports = async function(projectid, text){
     const translate = new Translate({
         projectId: projectid,
     });
-    console.log(text)
     const {
         raw,
         gitmoji

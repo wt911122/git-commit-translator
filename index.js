@@ -4,7 +4,6 @@ const fs = require('fs');
 const program = require('commander');
 const translate = require('./src/translate');
 const format = function(rslt){
-    console.log(rslt)
     const {
         source,
         result
