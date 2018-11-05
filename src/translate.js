@@ -2,9 +2,6 @@
 // Imports the Google Cloud client library
 const {Translate} = require('@google-cloud/translate');
 
-// Your Google Cloud Platform project ID
-const projectId = 'translatemycommi-1541318377656';
-
 // Instantiates a client
 
 
