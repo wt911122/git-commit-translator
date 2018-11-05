@@ -1,24 +1,24 @@
 
 'use strict';
 const fs = require('fs');
+const program = require('commander');
 const translate = require('./src/translate');
 const format = function(rslt){
+    console.log(rslt)
     const {
         source,
         result
     } = rslt;
 
-    return `${source[0].trim()}en: ${result.trim()} \n\n`;
+    return `${source.trim()} en: ${result.trim()} \n\n`;
 }
-async function resolve(){
+async function resolve(projectid){
     try{
-        // console.log(process.env.HUSKY_GIT_PARAMS);
+
         const messagefile =process.env.HUSKY_GIT_PARAMS;
         const messagefromhusky = fs.readFileSync(messagefile, { encoding: 'utf-8' });
-        console.log(messagefromhusky);
-        const result = await translate(messagefromhusky);
+        const result = await translate(projectid, messagefromhusky);
         const msg = format(result);
-        console.log(msg)
         fs.writeFileSync(messagefile, msg, { encoding: 'utf-8' });
         process.exit(1);
     }catch(err){
@@ -27,7 +27,13 @@ async function resolve(){
     }
 
 }
-resolve().catch(()=>{process.exit(1);})
+program
+    .option('-p, --project-id', 'Google Project ID')
+    .parse(process.argv);
+if(!program.projectId){
+    process.exit(1);
+}
+resolve(program.projectId).catch(()=>{process.exit(1);})
 // resolve().finally(() => {
 //     process.exit(1);
 // });

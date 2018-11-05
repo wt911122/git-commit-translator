@@ -1,5 +1,5 @@
 {
   "hooks": {
-    "commit-msg": "node index.js"
+    "commit-msg": "node index.js --project-id=translatemycommi-1541318377656"
   }
 }

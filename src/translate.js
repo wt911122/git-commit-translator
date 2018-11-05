@@ -6,13 +6,8 @@ const {Translate} = require('@google-cloud/translate');
 const projectId = 'translatemycommi-1541318377656';
 
 // Instantiates a client
-const translate = new Translate({
-  projectId: projectId,
-});
 
-// The text to translate
-//const text = '第一次提交';
-// The target language
+
 const target = 'en';
 
 const checkgitmoji = function(text){
@@ -29,17 +24,20 @@ const checkgitmoji = function(text){
     }
 }
 
-module.exports = async function(text){
+module.exports = async function(projectid, text){
+    const translate = new Translate({
+        projectId: projectid,
+    });
+    console.log(text)
     const {
         raw,
         gitmoji
-    } = checkgitmoji(text[0]);
+    } = checkgitmoji(text);
 
     return translate
         .translate(raw, target)
         .then(results => {
             const translation = results[0];
-             console.log(translation);
             return {
                 source: text,
                 result: translation,
