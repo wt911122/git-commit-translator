@@ -1,28 +1,30 @@
 
 'use strict';
-const read = require('@commitlint/read');
+const fs = require('fs');
 const translate = require('./src/translate');
 const format = function(rslt){
     const {
         source,
         result
     } = rslt;
-    return `${source} / ${result}`;
+
+    return `${source[0].trim()}en: ${result.trim()} \n\n`;
 }
 async function resolve(){
     try{
-        const message = await read({edit: true});
-        const result = await translate(message);
-        console.log(format(result));
-        process.stdout.write(format(result))
-        process.exit(1);
+        // console.log(process.env.HUSKY_GIT_PARAMS);
+        const messagefile =process.env.HUSKY_GIT_PARAMS;
+        const messagefromhusky = fs.readFileSync(messagefile, { encoding: 'utf-8' });
+        console.log(messagefromhusky);
+        const result = await translate(messagefromhusky);
+        fs.writeFileSync(messagefile, format(result), { encoding: 'utf-8' });
     }catch(err){
-        process.exit(1);
+        console.log(err)
         throw err;
     }
 
 }
-resolve();
+resolve().catch(()=>{process.exit(1);})
 // resolve().finally(() => {
 //     process.exit(1);
 // });
