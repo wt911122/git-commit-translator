@@ -8,7 +8,7 @@ eng-first 是否把英文显示在前面
 
 
 ```
-//.huskyrc 配置
+//.huskyrc 配置 husky(https://www.npmjs.com/package/husky)的配置文件
 {
   "hooks": {
     "commit-msg": "node index.js --project-id=[your google project id] --eng-first=[true|false]"
