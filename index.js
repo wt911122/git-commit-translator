@@ -3,20 +3,23 @@
 const fs = require('fs');
 const program = require('commander');
 const translate = require('./src/translate');
-const format = function(rslt){
+const format = function(rslt, engFirst){
     const {
-        source,
-        result
+        raw,
+        result,
+        gitmoji
     } = rslt;
-
-    return `${source.trim()} en: ${result.trim()} \n\n`;
+    if(engFirst) {
+        return `${gitmoji} ${result.trim()} cn: ${raw.trim()} \n\n`;
+    }
+    return `${gitmoji} ${raw.trim()} en: ${result.trim()} \n\n`;
 }
-async function resolve(projectid){
+async function resolve(projectid, engFirst){
     try{
-        const messagefile =process.env.HUSKY_GIT_PARAMS;
+        const messagefile = process.env.HUSKY_GIT_PARAMS;
         const messagefromhusky = fs.readFileSync(messagefile, { encoding: 'utf-8' });
         const result = await translate(projectid, messagefromhusky);
-        const msg = format(result);
+        const msg = format(result, engFirst);
         fs.writeFileSync(messagefile, msg, { encoding: 'utf-8' });
     }catch(err){
         console.log(err)
@@ -26,12 +29,11 @@ async function resolve(projectid){
 }
 program
     .option('-p, --project-id', 'Google Project ID')
+    .option('-e, --eng-first', 'English First')
     .parse(process.argv);
 if(!program.projectId){
     console.error('translate: google projectId is needed');
     process.exit(1);
 }
-resolve(program.projectId).catch(()=>{process.exit(1);})
-// resolve().finally(() => {
-//     process.exit(1);
-// });
+const engFirst = !!process.engFirst || false;
+resolve(program.projectId, engFirst).catch(()=>{process.exit(1);})

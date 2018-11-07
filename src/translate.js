@@ -3,8 +3,6 @@
 const {Translate} = require('@google-cloud/translate');
 
 // Instantiates a client
-
-
 const target = 'en';
 
 const checkgitmoji = function(text){
@@ -35,8 +33,9 @@ module.exports = async function(projectid, text){
         .then(results => {
             const translation = results[0];
             return {
-                source: text,
+                raw: raw,
                 result: translation,
+                gitmoji
             }
         })
 }
