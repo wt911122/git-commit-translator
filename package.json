@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@commitlint/read": "^7.1.2",
     "@google-cloud/translate": "^2.1.2"
   },
   "devDependencies": {
