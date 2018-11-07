@@ -35,5 +35,5 @@ if(!program.projectId){
     console.error('translate: google projectId is needed');
     process.exit(1);
 }
-const engFirst = !!process.engFirst || false;
+const engFirst = !!program.engFirst || false;
 resolve(program.projectId, engFirst).catch(()=>{process.exit(1);})
