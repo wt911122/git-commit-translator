@@ -1,6 +1,6 @@
 {
-  "name": "gitcommittranslate",
-  "version": "1.0.0",
+  "name": "git-commit-translator",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
